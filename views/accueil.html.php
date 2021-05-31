@@ -30,17 +30,41 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href='/repertoire_telephonique/router.php/liste-des-contacts' >Liste des Contacts</a>
+            <a class="nav-link" href='/repertoire_telephonique/router.php/liste-des-contacts'>Liste des Contacts</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href='/repertoire_telephonique/router.php/connexion' >Se connecter</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href='/repertoire_telephonique/router.php/deconnexion' >Se déconnecter</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href='/repertoire_telephonique/router.php/enregistrer_admin' >Créer un compte</a>
-          </li>
+
+					<?php
+					if (isset($_SESSION['utilisateur'])) {
+					?>
+						<?php if (isset($_SESSION['utilisateur']->role) && $_SESSION['utilisateur']->role == 'admin') { ?>
+							<li class="nav-item">
+								<a class="nav-link" href='/repertoire_telephonique/router.php/ajouter-contact'>Ajouter un contact</a>
+							</li>
+						<?php } ?>
+
+						<li class="nav-item">
+							<a class="nav-link" href='/repertoire_telephonique/router.php/deconnexion'>Se déconnecter</a>
+						</li>
+					<?php } else { ?>
+
+						<li class="nav-item">
+							<a class="nav-link" href='/repertoire_telephonique/router.php/connexion'>Se connecter</a>
+						</li>
+            <li>
+            <a class="nav-link" href='/repertoire_telephonique/router.php/enregistrer_admin'>Créer un compte</a>
+            </li>
+					<?php } ?>
+				</ul>
+
+				<?php
+				if (isset($_SESSION['utilisateur'])) {
+				?>
+
+					<p class="avatar my-2 text-light">
+						<img src="<?php echo $_SESSION['utilisateur']->avatar; ?>" alt="Avatar de <?php echo $_SESSION['utilisateur']->pseudo; ?>"><?php echo $_SESSION['utilisateur']->pseudo; ?>
+					</p>
+				<?php } ?>
+
         </ul>
       </div>
 

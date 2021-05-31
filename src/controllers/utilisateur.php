@@ -57,7 +57,7 @@ function construireUtilisateurAvecPost(array $post): Utilisateur {
 	$utilisateur->pseudo = $post['pseudo'];
 	$utilisateur->avatar = $post['avatar'];
 	$utilisateur->identifiant = $post['login'];
-	$utilisateur->mot_de_passe = password_hash($post['password'], PASSWORD_BCRYPT); // On n'oublie pas de hasher le mot de passe !
+	$utilisateur->mot_de_passe = password_hash($post['password'], PASSWORD_BCRYPT); 
     if($post['admin']!==null){
         $utilisateur->role = 'admin';
     }else{
@@ -68,36 +68,26 @@ function construireUtilisateurAvecPost(array $post): Utilisateur {
 	return $utilisateur;
 }
 
-/****** Actions ******/
+////Actions
 function connexion() {
     if (!empty($_POST)) {
-        // Si le $_POST n'est pas vide, ça veut dire que le formulaire a été envoyé
 
         // On vérifie le $_POST
         $erreurs = verifierPostConnexion($_POST);
 
 
         if (empty($erreurs)) {
-            // S'il n'y a pas d'erreur
 
-            // On récupère l'utilisateur par son identifiant
             $utilisateur = Utilisateur::retrieveByField('identifiant', $_POST['login'], SimpleOrm::FETCH_ONE);
 
             if ($utilisateur !== null) {
-                // Si l'utilisateur a été trouvé (différent de null)
 
                 if (password_verify($_POST['password'], $utilisateur->mot_de_passe)) {
-                    // On utilise password_verify pour voir
-                    // Si le mot de passe saisi correspond
-                    // Au mot de passe de l'utilisateur qu'on a récupéré de la BDD
-                    // Qui est hashé
 
-                    // On démarre une session
+
                     session_start();
-                    // On y stocke notre utilisateur
                     $_SESSION['utilisateur'] = $utilisateur;
 
-                    // On redirige
                     header("LOCATION: /repertoire_telephonique/router.php/accueil");
                 } else {
                     $erreurs[] = 'Mauvais mot de passe.';
@@ -112,8 +102,7 @@ function connexion() {
 }
 
 function deconnexion() {
-    // Pour pouvoir détruire une session...
-    // Il faut qu'elle existe
+
     session_start();
     session_destroy();
 
@@ -122,7 +111,6 @@ function deconnexion() {
 
 function enregistrerAdmin() {
     if (isset($_POST['btn-valider'])) {
-        // Si le $_POST n'est pas vide, ça veut dire que le formulaire a été envoyé
 
         // On vérifie le $_POST
         $erreurs = verifierPostEnregistrement($_POST);

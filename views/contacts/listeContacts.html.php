@@ -9,7 +9,9 @@
     <div class="container">
     <h1 class="display-4 text-center">Tableau des articles</h1>
     <div class="text-center m-5">
+    <?php if (isset($_SESSION['utilisateur']->role) && $_SESSION['utilisateur']->role == 'admin') { ?>
     <a href="/repertoire_telephonique/router.php/ajouter-contact" class="btn btn-primary">Ajouter un nouveau contact</a> 
+    <?php }; ?>
     <a href="/repertoire_telephonique/router.php/accueil" class="btn btn-primary">Retour à l'accueil</a> 
     </div>
         <table class="table table-striped w-75 mx-auto">
@@ -30,10 +32,12 @@
                     <td class="w-25"><?php echo $element->prenom ?></td>
                     <td class="w-25"><a href='tel:'.<?php $element->num_tel ?>><?php echo $element->num_tel ?></a></td>
                     <td class="w-25"><a href='mailto:'.<?php $element->email ?>><?php echo $element->email ?></a></td>
+                    <?php if (isset($_SESSION['utilisateur']->role) && $_SESSION['utilisateur']->role == 'admin') { ?>
                     <td>
                         <a href="/repertoire_telephonique/router.php/modifier-contact?id=<?php echo $element->id ?>" class="btn btn-secondary">Modifier les coordonnées du contact</a> 
                         <a href="/repertoire_telephonique/router.php/supprimer-contact?id=<?php echo $element->id ?>" class="btn btn-danger">Supprimer le contact</a> 
                     </td>
+                    <?php }; ?>
                 </tr>
 
             <?php

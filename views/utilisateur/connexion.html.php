@@ -42,6 +42,10 @@
 
             <button name="btn-valider" type="submit" class="btn btn-primary">Se connecter</button>
         </form>
+        <div class="text-center m-5">
+            <p>Si vous n'avez pas de compte:<p><br/>
+            <a class="btn btn-primary" href='/repertoire_telephonique/router.php/enregistrer_admin'>Créer un compte</a> 
+        </div>
 
     </div>
 
